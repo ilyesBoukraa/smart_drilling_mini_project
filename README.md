@@ -59,7 +59,18 @@ MySQL is used as the database management system.
      ```
 
 ## Usage
+1. Run the frontend and backend servers:
+   - **Frontend:**
+     ```bash
+     cd smart_drilling_mini_project/frontend
+     npm start
+     ```
+   - **Backend:**
+     ```bash
+     cd smart_drilling_mini_project/backend
+     uvicorn main:app --reload
+     ```
 
-1. Access the application at [http://localhost:3000](http://localhost:3000) in your web browser.
-2. Use the interface to add, edit, and delete tasks.
-3. Optionally, use the filter feature to view tasks based on completion status.
+2. Access the application at [http://localhost:3000](http://localhost:3000) in your web browser.
+3. Use the interface to add, edit, and delete tasks.
+4. Optionally, use the filter feature to view tasks based on completion status.
