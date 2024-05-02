@@ -50,7 +50,7 @@ MySQL is used as the database management system.
    - **Frontend:**
      ```bash
      cd smart_drilling_mini_project/frontend
-     npm start
+     npm run dev
      ```
    - **Backend:**
      ```bash
@@ -63,7 +63,7 @@ MySQL is used as the database management system.
    - **Frontend:**
      ```bash
      cd smart_drilling_mini_project/frontend
-     npm start
+     npm run dev
      ```
    - **Backend:**
      ```bash
