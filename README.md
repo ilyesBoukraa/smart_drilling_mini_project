@@ -59,7 +59,11 @@ MySQL is used as the database management system.
      ```
 
 ## Usage
-1. Run the frontend and backend servers:
+
+1. Set up the environment variable for Tortoise ORM:
+   ```bash
+   $env:TORTOISE_DATABASE_URL = 'mysql://<usernaem>:<password>@<address>/<database_name>'
+2. Run the frontend and backend servers:
    - **Frontend:**
      ```bash
      cd smart_drilling_mini_project/frontend
@@ -71,6 +75,6 @@ MySQL is used as the database management system.
      uvicorn main:app --reload
      ```
 
-2. Access the application at [http://localhost:3000](http://localhost:3000) in your web browser.
-3. Use the interface to add, edit, and delete tasks.
-4. Optionally, use the filter feature to view tasks based on completion status.
+3. Access the application at [http://localhost:3000](http://localhost:3000) in your web browser.
+4. Use the interface to add, edit, and delete tasks.
+5. Optionally, use the filter feature to view tasks based on completion status.
