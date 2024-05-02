@@ -43,21 +43,6 @@ MySQL is used as the database management system.
     cd smart_drilling_mini_project/backend
     pip install -r requirements.txt
     ```
-
-4. Configure the database settings in the backend configuration files.
-
-5. Run the frontend and backend servers:
-   - **Frontend:**
-     ```bash
-     cd smart_drilling_mini_project/frontend
-     npm run dev
-     ```
-   - **Backend:**
-     ```bash
-     cd smart_drilling_mini_project/backend
-     uvicorn main:app --reload
-     ```
-
 ## Usage
 
 1. Set up the environment variable for Tortoise ORM:
