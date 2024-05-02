@@ -56,8 +56,8 @@ MySQL is used as the database management system.
      ```
    - **Backend:**
      ```bash
-     cd smart_drilling_mini_project/backend
-     uvicorn main:app --reload
+     cd smart_drilling_mini_project
+     uvicorn backend.main:app --reload
      ```
 
 3. Access the application at [http://localhost:3000](http://localhost:3000) in your web browser.
