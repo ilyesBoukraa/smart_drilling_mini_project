@@ -11,7 +11,7 @@ class ToDos(Model):
 
     __tablename__ = "todos"
     id = fields.IntField(pk=True) 
-    content = fields.CharField(max_length=255, null=False)
+    content = fields.CharField(max_length=255, null=False, unique=True)
     is_completed = fields.BooleanField(default=False)
     # new_column_to_test_aerich = fields.CharField(max_length=20)
 

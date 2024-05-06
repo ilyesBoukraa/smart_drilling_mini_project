@@ -17,7 +17,7 @@ import AppTasks from '../app-tasks';
 // Also the AnalyticsTasks from app-tasks.jsx file is called AppTasks here
 
 async function initializeDatabase() {
-  console.log('inside initializeDatabase');
+  // console.log('inside initializeDatabase');
   const initialValues = [
     { content: 'Keep Learning React for 4h', is_completed: false },
     { content: 'Take a Break of 2h', is_completed: true },
@@ -51,7 +51,7 @@ async function initializeDatabase() {
   }
 }
 
-async function fetchIncompleteTodos() {
+async function fetchTodos() {
   const url = 'http://localhost:8000/todos/?filter_by_complited=false';
 
   try {
@@ -65,18 +65,20 @@ async function fetchIncompleteTodos() {
 
 export default function AppView() {
   const [items, setItems] = useState([]);
-  const [filterStatus, setFilterStatus] = useState(false);
+  const [filterStatus, setFilterStatus] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        // Checking if the db has already been initialized
-
         localStorage.setItem('databaseInitialized', 'false');
         const databaseInitialized = localStorage.getItem('databaseInitialized');
-        console.log(databaseInitialized);
+        console.log(
+          databaseInitialized,
+          databaseInitialized === false || databaseInitialized == null
+        );
+        // Checking if the db has already been initialized
 
-        if (databaseInitialized === 'false') {
+        if (databaseInitialized === false || databaseInitialized == null) {
           // If not initialize it
           console.log('Initializing database ...');
           await initializeDatabase();
@@ -84,9 +86,9 @@ export default function AppView() {
           console.log('Database already Initialized');
         }
 
-        const incompleteTodos = await fetchIncompleteTodos();
+        const my_todos = await fetchTodos();
 
-        setItems(incompleteTodos);
+        setItems(my_todos);
       } catch (error) {
         console.error('Failed to fetch data:', error);
       }

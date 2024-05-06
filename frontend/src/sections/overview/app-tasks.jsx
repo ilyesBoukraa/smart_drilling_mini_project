@@ -2,24 +2,38 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 
+// , useEffect
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
-import Iconify from 'src/components/iconify';
+import Iconify from '../../components/iconify'; // 'src/components/iconify';
+
+import TaskItem from './task-items';
 
 // ----------------------------------------------------------------------
 
 // Please note that Tasks and Todos are the same thing here
+/**
+ * useEffect(() => {
+    // Filter the list to get only items with is_completed as true
+    const completedItems = list.filter((item) => item.is_completed);
+
+    // Extract the IDs of completed items
+    const completedItemIds = completedItems.map((item) => item.id);
+
+    // Set the selected state with the IDs of completed items
+    setSelected(completedItemIds);
+  }, [list]);
+
+ * / */
 
 export default function AnalyticsTasks({
   title,
@@ -31,8 +45,6 @@ export default function AnalyticsTasks({
   onFilter,
   ...other
 }) {
-  const [selected, setSelected] = useState([]);
-
   useEffect(() => {
     // Filter the list to get only items with is_completed as true
     const completedItems = list.filter((item) => item.is_completed);
@@ -44,10 +56,15 @@ export default function AnalyticsTasks({
     setSelected(completedItemIds);
   }, [list]);
 
+  const [selected, setSelected] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+
+  // list
   const handleClickComplete = async (taskId) => {
     try {
       const taskToUpdate = list.find((task) => task.id === taskId);
-
+      console.log('the task we are checking:', taskToUpdate);
       if (!taskToUpdate) {
         console.error(`Task with ID ${taskId} not found`);
         return;
@@ -55,6 +72,8 @@ export default function AnalyticsTasks({
 
       // Update the task in the db
       const updatedIsCompleted = !taskToUpdate.is_completed;
+
+      console.log('inside onChange is_completed:', taskToUpdate.is_completed);
       const content = encodeURIComponent(taskToUpdate.content);
       const isCompleted = updatedIsCompleted;
 
@@ -73,27 +92,28 @@ export default function AnalyticsTasks({
 
       setSelected(tasksCompleted);
 
-      console.log('response', response);
+      console.log('response', response.data);
     } catch (error) {
       console.error('Failed to update task completion status:', error.message);
     }
   };
-
-  const [inputValue, setInputValue] = useState('');
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
   };
 
   async function handleSubmit(event) {
-    event.preventDefault();
     /*
+    event.preventDefault();
+    
     if (inputValue.trim() !== '') {
       const newItem = { id: crypto.randomUUID(), content: inputValue };
       onAddItems(newItem);
       setInputValue('');
     }
     */
+    event.preventDefault();
+
     if (inputValue.trim() !== '') {
       try {
         const response = await axios.post('http://localhost:8000/todos/', {
@@ -111,7 +131,6 @@ export default function AnalyticsTasks({
     }
   }
 
-  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const handleMenuOpen = (event) => {
     setMenuAnchorEl(event.currentTarget);
   };
@@ -182,7 +201,7 @@ export default function AnalyticsTasks({
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         >
-          <MenuItem onClick={() => onFilter()}>
+          <MenuItem onClick={onFilter}>
             <Iconify icon="eva:checkmark-circle-2-fill" sx={{ mr: 2 }} />
             Filter By Completed
           </MenuItem>
@@ -195,8 +214,8 @@ export default function AnalyticsTasks({
         <TaskItem
           key={task.id}
           task={task}
-          checked={selected.includes(task.id)} // task.is_completed
-          onChange={() => handleClickComplete(task.id)}
+          checked={selected.includes(task.id)} // selected.includes(task.id)// task.is_completed
+          onChange={handleClickComplete}
           onDeleteItem={onDeleteItem}
           onEditItem={onEditItem}
         />
@@ -213,150 +232,4 @@ AnalyticsTasks.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   onFilter: PropTypes.func,
-};
-
-// ----------------------------------------------------------------------
-
-function TaskItem({ task, checked, onChange, onDeleteItem, onEditItem }) {
-  const [open, setOpen] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedName, setEditedName] = useState(task.name);
-  const [originalName, setOriginalName] = useState(task.name);
-
-  const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
-  };
-
-  const handleCloseMenu = () => {
-    setOpen(null);
-  };
-
-  const handleMarkComplete = () => {
-    handleCloseMenu();
-    onChange(task.id);
-    console.info('MARK COMPLETE', task.id);
-  };
-
-  const handleEdit = () => {
-    handleCloseMenu();
-    setIsEditing(true);
-    setOriginalName(task.content);
-    setEditedName(task.content);
-    console.info('EDIT', task.id);
-  };
-
-  const handleSave = () => {
-    onEditItem(task.id, editedName);
-    setIsEditing(false);
-  };
-
-  const handleQuit = () => {
-    setIsEditing(false);
-    setEditedName(originalName);
-  };
-
-  const handleInputChange = (event) => {
-    setEditedName(event.target.value);
-  };
-
-  const handleDelete = () => {
-    handleCloseMenu();
-    onDeleteItem(task.id);
-    console.info('DELETE', task.id);
-  };
-
-  return (
-    <>
-      <Stack
-        direction="row"
-        alignItems="center"
-        sx={{
-          pl: 2,
-          pr: 1,
-          py: 1,
-          '&:not(:last-of-type)': {
-            borderBottom: (theme) => `dashed 1px ${theme.palette.divider}`,
-          },
-          ...(checked && {
-            color: 'text.disabled',
-            textDecoration: 'line-through',
-          }),
-        }}
-      >
-        {isEditing ? (
-          <>
-            <form className="save-form" onSubmit={handleSave}>
-              <TextField
-                value={editedName}
-                onChange={handleInputChange}
-                sx={{ width: '300px', height: '50px' }}
-              />
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{ marginTop: '2px', marginLeft: 1, height: '50px' }}
-              >
-                Save
-              </Button>
-            </form>
-            <div className="form-quit">
-              <Button
-                onClick={handleQuit}
-                type="submit"
-                variant="outlined"
-                sx={{ marginTop: '2px', marginLeft: 1, height: '50px' }}
-              >
-                Quit
-              </Button>
-            </div>
-          </>
-        ) : (
-          <FormControlLabel
-            control={<Checkbox checked={checked} onChange={onChange} />}
-            label={task.content}
-            sx={{ flexGrow: 1, m: 0 }}
-          />
-        )}
-
-        {!isEditing && (
-          <IconButton color={open ? 'inherit' : 'default'} onClick={handleOpenMenu}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
-        )}
-      </Stack>
-
-      {!isEditing && (
-        <Popover
-          open={!!open}
-          anchorEl={open}
-          onClose={handleCloseMenu}
-          anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        >
-          <MenuItem onClick={handleMarkComplete}>
-            <Iconify icon="eva:checkmark-circle-2-fill" sx={{ mr: 2 }} />
-            Mark Complete
-          </MenuItem>
-
-          <MenuItem onClick={handleEdit}>
-            <Iconify icon="solar:pen-bold" sx={{ mr: 2 }} />
-            Edit
-          </MenuItem>
-
-          <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
-            <Iconify icon="solar:trash-bin-trash-bold" sx={{ mr: 2 }} />
-            Delete
-          </MenuItem>
-        </Popover>
-      )}
-    </>
-  );
-}
-
-TaskItem.propTypes = {
-  checked: PropTypes.bool,
-  onChange: PropTypes.func,
-  task: PropTypes.object,
-  onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
 };
