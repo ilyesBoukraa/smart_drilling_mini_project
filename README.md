@@ -48,24 +48,8 @@ MySQL is used as the database management system.
     pip install -r requirements.txt
     ```
 ## Usage
-
-1. **Set up the environment variable for Tortoise ORM**:
-    #### Linux / Ubuntu / macOS:
-    
-    ```bash
-    export TORTOISE_DATABASE_URL='mysql://<usernaem>:<password>@<address>/<database_name>'
-    ```
-    #### Windows (PowerShell):
-    
-    ``` bash
-    $env:TORTOISE_DATABASE_URL='mysql://<usernaem>:<password>@<address>/<database_name>'
-    ```
-    ### Windows (Command Prompt):
-    ``` bash 
-    set TORTOISE_DATABASE_URL=mysql://<usernaem>:<password>@<address>/<database_name>
-    ```
    
-2. **Initialize the Virtual Environment**:
+1. **Initialize the Virtual Environment**:
    
    Before running the frontend and backend servers, you need to initialize the virtual environment. Navigate to the project directory and run the following command:
 
@@ -86,19 +70,36 @@ MySQL is used as the database management system.
     ```cmd
     venv\Scripts\activate
     ```
+2. **Set up the environment variable for Tortoise ORM**:
+    #### Linux / Ubuntu / macOS:
+    
+    ```bash
+    export TORTOISE_DATABASE_URL='mysql://<usernaem>:<password>@<address>/<database_name>'
+    ```
+    #### Windows (PowerShell):
+    
+    ``` bash
+    $env:TORTOISE_DATABASE_URL='mysql://<usernaem>:<password>@<address>/<database_name>'
+    ```
+    ### Windows (Command Prompt):
+    ``` bash 
+    set TORTOISE_DATABASE_URL=mysql://<usernaem>:<password>@<address>/<database_name>
+    ```
+
+
 3. **Database Migrations with Aerich**:
 
    Aerich is a migration tool for Tortoise ORM that allows you to manage database schema changes and apply them to your database. Here's how you can use Aerich with your Smart Drilling Mini Project:
 
    - **Initialization**: Before using Aerich, you need to initialize it with your Tortoise ORM configuration.
    
-   -  First navigate to the backend directory of your project using:
+   -  First make sure you are in the smart_drilling_mini_project directory if you are inside any of the backend/frontend folders you can go back using:
     ```bash
-      cd backend
+      cd ..
     ```
-     and run the following command:
+     then run the following command:
      ```bash
-     aerich init -t config.TORTOISE_ORM
+     aerich init -t backend.config.TORTOISE_ORM
      ```
     > Notes:
     > This command will initialize Aerich with your Tortoise ORM configuration.
@@ -125,17 +126,18 @@ MySQL is used as the database management system.
          ```
 
 3. **Run the Frontend and Backend Servers**:
-   - **Frontend:**
-     ```bash
-     cd smart_drilling_mini_project/frontend
-     npm run dev
-     ```
    - **Backend:**
      ```bash
      cd smart_drilling_mini_project
-     uvicorn backend.main:app --reload
+     uvicorn backend.main:app 
      ```
-
-4. **Access the application at [http://localhost:3000](http://localhost:3000) in your web browser**.
+   - **Frontend:**
+     First you need to run that using another terminal. assuming you are in the smart_drilling_mini_project directory, you need to navigate to the frontend dir first. 
+     ```bash
+     cd frontend
+     npm run dev
+     ```
+   
+4. **Access the application at [http://localhost:3030](http://localhost:3030) in your web browser**.
 5. **Use the interface to add, edit, and delete tasks**.
 6. **Optionally, use the filter feature to view tasks based on completion status**.
