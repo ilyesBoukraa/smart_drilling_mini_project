@@ -33,14 +33,18 @@ MySQL is used as the database management system.
     ```
 
 2. Install frontend dependencies:
-    ```bash
+    - Navigate to the frontend  and then install the dependencies
+   ```bash
     cd smart_drilling_mini_project/frontend
     npm install
     ```
 
-3. Install backend dependencies:
-    ```bash
-    cd smart_drilling_mini_project/backend
+4. Install backend dependencies:
+    - Navigate back to the smart_drilling_mini_project directory. and then navigate to the backend directory, and after that you can install all the dependencies
+   
+   ```bash
+    cd ..
+    cd backend
     pip install -r requirements.txt
     ```
 ## Usage
