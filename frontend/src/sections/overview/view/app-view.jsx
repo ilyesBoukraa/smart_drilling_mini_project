@@ -70,15 +70,12 @@ export default function AppView() {
   useEffect(() => {
     async function fetchData() {
       try {
-        localStorage.setItem('databaseInitialized', 'false');
+        // localStorage.setItem('databaseInitialized', 'false');
         const databaseInitialized = localStorage.getItem('databaseInitialized');
-        console.log(
-          databaseInitialized,
-          databaseInitialized === false || databaseInitialized == null
-        );
+        console.log(databaseInitialized);
         // Checking if the db has already been initialized
 
-        if (databaseInitialized === false || databaseInitialized == null) {
+        if (databaseInitialized === 'false' || databaseInitialized == null) {
           // If not initialize it
           console.log('Initializing database ...');
           await initializeDatabase();
