@@ -71,7 +71,8 @@ export default function AppView() {
     async function fetchData() {
       try {
         // Checking if the db has already been initialized
-        // localStorage.setItem('databaseInitialized', 'false');
+
+        localStorage.setItem('databaseInitialized', 'false');
         const databaseInitialized = localStorage.getItem('databaseInitialized');
         console.log(databaseInitialized);
 

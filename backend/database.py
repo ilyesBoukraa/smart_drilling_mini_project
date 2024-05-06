@@ -12,8 +12,8 @@ from tortoise.exceptions import DBConnectionError
 
 TORTOISE_DATABASE_URL = os.getenv('TORTOISE_DATABASE_URL')
 #print("TORTOISE_ORM:", TORTOISE_ORM)
-print("TORTOISE_DATABASE_URL",TORTOISE_DATABASE_URL)
-print("TORTOISE_ORM",TORTOISE_ORM)
+# print("TORTOISE_DATABASE_URL",TORTOISE_DATABASE_URL)
+# print("TORTOISE_ORM",TORTOISE_ORM)
 
 
 async def init_db(app: FastAPI):

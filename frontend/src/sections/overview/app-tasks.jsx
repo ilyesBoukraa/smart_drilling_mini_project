@@ -100,6 +100,7 @@ export default function AnalyticsTasks({
           content: inputValue,
           is_completed: false,
         });
+        console.log(response.data);
         onAddItems(response.data);
 
         // Reset the input value
@@ -118,6 +119,7 @@ export default function AnalyticsTasks({
   const handleMenuClose = () => {
     setMenuAnchorEl(null);
   };
+
   return (
     <Card {...other}>
       <Box
