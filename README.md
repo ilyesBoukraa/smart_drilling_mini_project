@@ -99,6 +99,9 @@ and run the following command.
    Aerich is a migration tool for Tortoise ORM that allows you to manage database schema changes and apply them to your database. Here's how you can use Aerich with your Smart Drilling Mini Project:
 
    - **Initialization**: Before using Aerich, you need to initialize it with your Tortoise ORM configuration.
+    > Note: To reinitialize the Aerih migration tool for testing purposes,
+    >  delete the 'migrations' folder and the 'pyproject.toml' file before proceeding.
+
 
    - First make sure you are in the smart_drilling_mini_project directory if you are inside any of the backend/frontend folders you can go back using:
 
@@ -138,7 +141,7 @@ and run the following command.
      aerich downgrade
      ```
 
-3. **Run the Frontend and Backend Servers**:
+4. **Run the Frontend and Backend Servers**:
    - **Backend:**
      First navigate back to the smart_drilling_mini_project directory (using ```cd ..```)
      then run that script:
@@ -155,6 +158,6 @@ and run the following command.
      ```bash
      npm run dev
      ```
-4. **Access the application at [http://localhost:3030](http://localhost:3030) in your web browser**.
-5. **Use the interface to add, edit, and delete tasks**.
-6. **Optionally, use the filter feature to view tasks based on completion status**.
+5. **Access the application at [http://localhost:3030](http://localhost:3030) in your web browser**.
+6. **Use the interface to add, edit, and delete tasks**.
+7. **Optionally, use the filter feature to view tasks based on completion status**.
