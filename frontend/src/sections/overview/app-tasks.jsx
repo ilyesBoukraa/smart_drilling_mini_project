@@ -47,8 +47,15 @@ export default function AnalyticsTasks({
 }) {
   useEffect(() => {
     // Filter the list to get only items with is_completed as true
-    const completedItems = list.filter((item) => item.is_completed);
-
+    const completedItems = list.filter((item) => {
+      if (Array.isArray(item.is_completed)) {
+        item.is_completed = item.is_completed[0];
+      }
+      if (item.is_completed === false) {
+        return false;
+      }
+      return true;
+    });
     // Extract the IDs of completed items
     const completedItemIds = completedItems.map((item) => item.id);
 
