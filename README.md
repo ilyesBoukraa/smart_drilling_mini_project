@@ -140,14 +140,19 @@ and run the following command.
 
 3. **Run the Frontend and Backend Servers**:
    - **Backend:**
+     First navigate back to the smart_drilling_mini_project directory (using ```cd ..```)
+     then run that script:
      ```bash
-     cd smart_drilling_mini_project
      uvicorn backend.main:app
      ```
    - **Frontend:**
      First you need to run that using another terminal. assuming you are in the smart_drilling_mini_project directory, you need to navigate to the frontend dir first.
+
      ```bash
      cd frontend
+     ```
+     
+     ```bash
      npm run dev
      ```
 4. **Access the application at [http://localhost:3030](http://localhost:3030) in your web browser**.
